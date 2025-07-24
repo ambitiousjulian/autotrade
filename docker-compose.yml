@@ -1,0 +1,47 @@
+services:
+  # Main trading bot and API
+  bot:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: robo-pilot-bot
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - PYTHONPATH=/app
+    volumes:
+      - ./core/data:/app/core/data
+      - ./core/models:/app/core/models
+      - ./reports:/app/reports
+      - ./schwab_tokens.json:/app/schwab_tokens.json
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - robo-net
+
+  # Next.js Dashboard
+  dashboard:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    container_name: robo-pilot-dashboard
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://bot:8000
+    depends_on:
+      - bot
+    networks:
+      - robo-net
+
+networks:
+  robo-net:
+    driver: bridge

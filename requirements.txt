@@ -1,0 +1,35 @@
+# Core dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+python-dotenv==1.0.0
+
+# Trading and data
+pandas==2.1.3
+numpy==1.26.2
+requests==2.31.0
+yfinance==0.2.33
+
+# ML dependencies
+scikit-learn==1.3.2
+xgboost==2.0.2
+
+# Database
+sqlalchemy==2.0.23
+
+# Reporting
+matplotlib==3.8.2
+reportlab==4.0.7
+
+# API clients
+# schwab-py==1.0.0  # Uncomment when you have Schwab API access
+
+# Redis for caching
+redis==5.0.1
+
+# Development
+pytest==7.4.3
+black==23.11.0
+ruff==0.1.6
+
+schwabdev
